@@ -1,0 +1,56 @@
+<h3 id="使用-jekyll-搭建个人博客macos">使用 Jekyll 搭建个人博客（macOS）</h3>
+
+<ol>
+  <li>
+    <p>安装 ruby：</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>ruby
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>set <code class="language-plaintext highlighter-rouge">SDKROOT</code> (only macOS Catalina or later)</p>
+
+    <p>Starting on macOS Catalina (10.15) the headers used for Ruby have been moved from their previous location which results in some gems, including Jekyll to fail installation. This can be solved by setting SDKROOT in your shell configuration to the value provided by xcrun.</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">SDKROOT</span><span class="o">=</span><span class="si">$(</span>xcrun <span class="nt">--show-sdk-path</span><span class="si">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>将 brew 安装的 ruby 路径写入环境配置文件：</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s1">'export PATH="/opt/homebrew/opt/ruby/bin:$PATH"'</span> <span class="o">&gt;&gt;</span> ~/.zshrc
+<span class="nb">source</span> ~/.zshrc
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>安装 Jekyll</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem <span class="nb">install</span> <span class="nt">--user-install</span> bundler jekyll
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>将 gem 路径写入环境配置文件：</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s1">'export PATH="$HOME/.local/share/gem/ruby/3.0.0/bin:$PATH"'</span> <span class="o">&gt;&gt;</span> ~/.zshrc
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Check that <code class="language-plaintext highlighter-rouge">GEM PATHS:</code> points to your home directory:</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem <span class="nb">env</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="安装中遇到的问题">安装中遇到的问题</h3>
+
+<p>提示错误：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.local/share/gem/ruby/3.0.0/gems/jekyll-4.2.1/lib/jekyll/commands/serve/servlet.rb:3:in <span class="sb">`</span>require<span class="s1">': cannot load such file -- webrick (LoadError)
+</span></code></pre></div></div>
+
+<p>解决方法：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle add webrick
+</code></pre></div></div>
+
